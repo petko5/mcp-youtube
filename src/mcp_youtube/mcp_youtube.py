@@ -53,9 +53,9 @@ def get_transcript(video_id: str, with_timestamps: bool = False, language: str =
                 return f"[{hours}:{minutes:02d}:{secs:02d}]"
             return f"[{minutes}:{secs:02d}]"
             
-        return "\n".join(f"{format_timestamp(entry['start'])} {entry['text']}" for entry in transcript)
+        return "\n".join(f"{format_timestamp(entry['start'])} {entry.text}" for entry in transcript)
     else:
-        return "\n".join(entry['text'] for entry in transcript)
+        return "\n".join(entry.text for entry in transcript)
 
 @server.list_tools()
 async def handle_list_tools() -> types.ListToolsResult:
