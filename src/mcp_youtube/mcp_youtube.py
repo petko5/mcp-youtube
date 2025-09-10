@@ -29,11 +29,14 @@ def extract_video_id(url: str) -> str:
             return parsed.path[8:]
     raise ValueError("Could not extract video ID from URL")
 
+from youtube_transcript_api import YouTubeTranscriptApi
+
 @server.tool()
 def get_transcript(video_id: str, with_timestamps: bool = False, language: str = "en") -> str:
     """Get transcript for a video ID and format it as readable text."""
     transcript: Transcript = None
-    available_transcripts = YouTubeTranscriptApi.list_transcripts(video_id)
+    ytt_api = YouTubeTranscriptApi()
+    available_transcripts = ytt_api.list(video_id)
     try:
         transcript = available_transcripts.find_transcript([language])
     except NoTranscriptFound:
